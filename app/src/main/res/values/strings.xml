@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SunnyDay</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="day_duration">Day duration</string>
+    <string name="choose_location">Choose location</string>
 </resources>

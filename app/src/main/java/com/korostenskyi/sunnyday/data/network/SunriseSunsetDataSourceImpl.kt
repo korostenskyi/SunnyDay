@@ -24,10 +24,10 @@ class SunriseSunsetDataSourceImpl(private val apiService: ApiService): SunriseSu
 
                 val dayInfoResponse = apiService.fetchDayInfoByCoordinates(latitude, longitude).await()
 
-                if (dayInfoResponse.isSuccessful && dayInfoResponse.body()?.status.equals("OK")) {
-                    _fetchedDayInfo.postValue(DataWrapper(dayInfoResponse.body()!!.data))
+                if (dayInfoResponse.status == "OK") {
+                    _fetchedDayInfo.postValue(DataWrapper(dayInfoResponse.data))
                 } else {
-                    _fetchedDayInfo.postValue(DataWrapper(error = Failure.ServerError(dayInfoResponse.message())))
+                    _fetchedDayInfo.postValue(DataWrapper(error = Failure.ServerError(dayInfoResponse.status)))
                 }
 
             } catch (e: Exception) {

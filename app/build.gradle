@@ -45,4 +45,8 @@ dependencies {
 
     // AndroidX CardView
     implementation 'androidx.cardview:cardview:1.0.0'
+
+    // Koin
+    implementation "org.koin:koin-androidx-scope:2.0.0-GA6"
+    implementation "org.koin:koin-androidx-viewmodel:2.0.0-GA6"
 }

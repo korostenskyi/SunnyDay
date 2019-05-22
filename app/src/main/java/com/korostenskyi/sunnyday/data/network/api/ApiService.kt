@@ -1,5 +1,6 @@
 package com.korostenskyi.sunnyday.data.network.api
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.korostenskyi.sunnyday.data.entity.SunriseSunsetResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
@@ -17,12 +18,13 @@ class ApiService {
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
 
         client = retrofit.create(ApiClient::class.java)
     }
 
-    fun fetchDayInfoByCoordinates(latitude: Double, longitude: Double): Deferred<Response<SunriseSunsetResponse>> {
+    fun fetchDayInfoByCoordinates(latitude: Double, longitude: Double): Deferred<SunriseSunsetResponse> {
         return client.fetchDayInfoByCoordinates(latitude, longitude)
     }
 }

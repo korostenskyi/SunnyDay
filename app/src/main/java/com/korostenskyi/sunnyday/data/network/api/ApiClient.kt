@@ -11,6 +11,6 @@ interface ApiClient {
     @GET("json")
     fun fetchDayInfoByCoordinates(
         @Query("lat") latitude: Double,
-        @Query("lon") longitude: Double
-    ): Deferred<Response<SunriseSunsetResponse>>
+        @Query("lng") longitude: Double
+    ): Deferred<SunriseSunsetResponse>
 }

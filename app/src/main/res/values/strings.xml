@@ -3,5 +3,8 @@
     <string name="sunrise">Sunrise</string>
     <string name="sunset">Sunset</string>
     <string name="day_duration">Day duration</string>
-    <string name="choose_location">Choose location</string>
+    <string name="choose_location">Get info for my location</string>
+    <string name="search_hint">Enter the city name…</string>
+
+    <string name="places_api_key">AIzaSyA4ITka8kBZ8nnYEY15_q7FUdCzxfOUuhg</string>
 </resources>

@@ -7,10 +7,14 @@
         android:layout_height="match_parent"
         tools:context=".ui.MainActivity">
 
-    <include layout="@layout/toolbar"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toTopOf="parent"
-             app:layout_constraintEnd_toEndOf="parent"/>
+    <!-- <include layout="@layout/toolbar" /> -->
+
+    <fragment android:id="@+id/autocomplete_fragment"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+              app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -18,7 +22,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/sunset_card_padding"
             android:layout_marginRight="@dimen/sunset_card_padding"
-            android:layout_marginTop="@dimen/sunset_card_margin_top"
             app:cardCornerRadius="@dimen/card_radius"
             app:contentPadding="@dimen/padding_medium"
             app:elevation="@dimen/card_elevation"
@@ -31,16 +34,6 @@
                 android:layout_height="match_parent"
                 android:layout_width="match_parent">
 
-            <TextView
-                android:id="@+id/cityNameCard_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_12"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:gravity="center" />
-
             <RelativeLayout
                     android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
@@ -49,14 +42,14 @@
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cityNameCard_tv">
+                    app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                         android:id="@+id/sunRise_ico"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_12"
-                        android:src="@drawable/ic_wb_sunny_black_24dp" />
+                        android:src="@drawable/ic_wb_sunny_black_24dp"/>
 
                 <TextView
                         style="@style/DayInfoTextStyle"
@@ -65,7 +58,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:layout_toEndOf="@+id/sunRise_ico"
-                        android:text="@string/sunrise" />
+                        android:text="@string/sunrise"/>
 
                 <TextView
                         style="@style/DayInfoTextStyle"
@@ -74,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/margin_12" />
+                        android:layout_marginEnd="@dimen/margin_12"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -92,7 +85,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_12"
-                        android:src="@drawable/ic_wb_sunset_black_24dp" />
+                        android:src="@drawable/ic_wb_sunset_black_24dp"/>
 
                 <TextView
                         style="@style/DayInfoTextStyle"
@@ -101,7 +94,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:layout_toEndOf="@+id/sunSet_ico"
-                        android:text="@string/sunset" />
+                        android:text="@string/sunset"/>
 
                 <TextView
                         style="@style/DayInfoTextStyle"
@@ -110,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/margin_12" />
+                        android:layout_marginEnd="@dimen/margin_12"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -127,7 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_12"
-                        android:src="@drawable/ic_wb_day_night_black_24dp" />
+                        android:src="@drawable/ic_wb_day_night_black_24dp"/>
 
                 <TextView
                         style="@style/DayInfoTextStyle"
@@ -136,7 +129,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:layout_toEndOf="@+id/dayNight_ico"
-                        android:text="@string/day_duration" />
+                        android:text="@string/day_duration"/>
 
                 <TextView
                         style="@style/DayInfoTextStyle"
@@ -145,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/margin_12" />
+                        android:layout_marginEnd="@dimen/margin_12"/>
             </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

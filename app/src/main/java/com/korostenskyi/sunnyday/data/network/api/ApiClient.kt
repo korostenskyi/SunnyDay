@@ -9,8 +9,8 @@ import retrofit2.http.Query
 interface ApiClient {
 
     @GET("json")
-    fun fetchDayInfoByCoordinates(
+    suspend fun fetchDayInfoByCoordinates(
         @Query("lat") latitude: Double,
         @Query("lng") longitude: Double
-    ): Deferred<SunriseSunsetResponse>
+    ): SunriseSunsetResponse
 }

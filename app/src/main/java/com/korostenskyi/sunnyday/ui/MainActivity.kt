@@ -23,24 +23,16 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-
 class MainActivity : AppCompatActivity() {
-
-    private val LAYOUT = R.layout.activity_main
-    private val PLACE_REQUEST = 1
-
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
     private val viewModel: MainViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(LAYOUT)
-
+        setContentView(R.layout.activity_main)
         initPlaces()
-
+        bindUI()
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@MainActivity)
-
         if (NetworkUtils.isNetworkAvailable(this@MainActivity)) {
             choose_location_btn.setOnClickListener {
                 updateCurrentLocation()
@@ -50,28 +42,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchDayInfo(latitude: Double, longitude: Double) {
-
+    private fun bindUI() {
         viewModel.dayInfo.observe(this@MainActivity, Observer { dayInfoWrapped ->
-            if (dayInfoWrapped.data != null) {
-
-                sunRise_tv.text = dayInfoWrapped.data.sunrise
-                sunSet_tv.text = dayInfoWrapped.data.sunset
-                dayDuration_tv.text = dayInfoWrapped.data.dayLength
-
-            } else if (dayInfoWrapped.error != null) {
-
-                println(dayInfoWrapped.error.toString())
-            }
+            sunRise_tv.text = dayInfoWrapped.sunrise
+            sunSet_tv.text = dayInfoWrapped.sunset
+            dayDuration_tv.text = dayInfoWrapped.dayLength
         })
+    }
 
+    private fun fetchDayInfo(latitude: Double, longitude: Double) {
         GlobalScope.launch(Dispatchers.IO) {
             viewModel.fetchDayInfoByCoordinates(latitude, longitude)
         }
     }
 
     private fun updateCurrentLocation() {
-
         if (ActivityCompat.checkSelfPermission(this@MainActivity, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
                 fetchDayInfo(location.latitude, location.longitude)
@@ -87,31 +72,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPlaces() {
+        (supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment).apply {
+            setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG))
+            setOnPlaceSelectedListener(object : PlaceSelectionListener {
 
-        Places.initialize(this@MainActivity, resources.getString(R.string.places_api_key))
+                override fun onPlaceSelected(place: Place) {
+                    val coordinates = place.latLng
+                    fetchDayInfo(coordinates!!.latitude, coordinates.latitude)
+                }
 
-        val autoCompleteSupportFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
-        autoCompleteSupportFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG))
-
-        autoCompleteSupportFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-
-            override fun onPlaceSelected(place: Place) {
-
-                val coordinates = place.latLng
-
-                val latitude = coordinates!!.latitude
-                val longitude = coordinates.latitude
-
-                fetchDayInfo(latitude, longitude)
-            }
-
-            override fun onError(status: Status) {
-                Log.e("GOOGLE PLACES", "$status")
-            }
-        })
+                override fun onError(status: Status) {
+                    Log.e("GOOGLE PLACES", "$status")
+                }
+            })
+        }
     }
 
     private fun showToast(message: String) {
         Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val PLACE_REQUEST = 1
     }
 }

@@ -9,8 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiService {
 
-    private val BASE_URL = "https://api.sunrise-sunset.org/"
-
     private val retrofit: Retrofit
     private val client: ApiClient
 
@@ -24,7 +22,9 @@ class ApiService {
         client = retrofit.create(ApiClient::class.java)
     }
 
-    fun fetchDayInfoByCoordinates(latitude: Double, longitude: Double): Deferred<SunriseSunsetResponse> {
-        return client.fetchDayInfoByCoordinates(latitude, longitude)
+    suspend fun fetchDayInfoByCoordinates(latitude: Double, longitude: Double) = client.fetchDayInfoByCoordinates(latitude, longitude)
+
+    companion object {
+        const val BASE_URL = "https://api.sunrise-sunset.org/"
     }
 }

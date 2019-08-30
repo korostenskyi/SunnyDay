@@ -10,10 +10,8 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val koinModule = module {
-
     single { ApiService() }
     single<SunriseSunsetDataSource> { SunriseSunsetDataSourceImpl(get()) }
     single<Repository> { RepositoryImpl(get()) }
-
     viewModel { MainViewModel(get()) }
 }

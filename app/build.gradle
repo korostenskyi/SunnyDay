@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -32,6 +30,19 @@ android {
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    def buildTypeDimension = "buildType"
+    flavorDimensions buildTypeDimension
+    productFlavors {
+
+        all {
+            buildConfigField "String", "SUNRISE_SUNSET_BASE_URL", '"https://api.sunrise-sunset.org/"'
+            buildConfigField "String", "PLACES_API_KEY", '"YOUR_KEY"'
+        }
+
+        prod { }
+
+        dev { }
     }
 }
 
